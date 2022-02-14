@@ -1,15 +1,15 @@
 import scrapy
 
-from..items import MytukonewsItem
+from..items import KenyansItem
 
 
-class mytukoscrapy(scrapy.Spider):
-    name = "tuko"
+class kenyanscrapy(scrapy.Spider):
+    name = "kenyans"
     page_number = 1
-    start_urls = ['https://www.kenyamoja.com/news/tuko']
+    start_urls = ['https://www.kenyamoja.com/news/kenyans']
 
     def parse(self, response):
-        items = MytukonewsItem()
+        items = KenyansItem()
 
         for quote in response.css('div.item-list ul li div.news-title'):
             titles = quote.css('a::text').extract()
@@ -20,7 +20,7 @@ class mytukoscrapy(scrapy.Spider):
 
             yield items
 
-        next_page = 'https://www.kenyamoja.com/news/tuko?page=' + str(mytukoscrapy.page_number)
-        if mytukoscrapy.page_number < 2:
-           mytukoscrapy.page_number += 1
+        next_page = 'https://www.kenyamoja.com/news/kenyans?page=' + str(kenyanscrapy.page_number)
+        if kenyanscrapy.page_number < 2:
+           kenyanscrapy.page_number += 1
            yield response.follow(next_page, self.parse)

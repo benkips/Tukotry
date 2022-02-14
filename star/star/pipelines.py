@@ -6,12 +6,7 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import  mysql.connector
 
-# class MytukonewsPipeline:
-#     def process_item(self, item, spider):
-#         return item
-
-class MytukonewsPipeline:
-
+class StarPipeline:
     def __init__(self):
         self.create_connection()
         self.create_table()
@@ -26,8 +21,8 @@ class MytukonewsPipeline:
         self.curr = self.conn.cursor()
 
     def create_table(self):
-        self.curr.execute("""DROP TABLE IF EXISTS  tuko_tb """)
-        self.curr.execute("""create table tuko_tb (
+        self.curr.execute("""DROP TABLE IF EXISTS  star_tb """)
+        self.curr.execute("""create table star_tb (
         id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
         links text,
         title text
@@ -46,7 +41,7 @@ class MytukonewsPipeline:
             x = str(y[1]).split("=")
             print("Value to be inserted is ===> ", str(x[1]))
             w = str(x[1])
-        sql = "INSERT INTO tuko_tb (links, title) VALUES (%s, %s)"
+        sql = "INSERT INTO star_tb (links, title) VALUES (%s, %s)"
         val = (w, titlex)
         self.curr.execute(sql,val)
         self.conn.commit()
